@@ -1,0 +1,238 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Nunito', sans-serif;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: #000;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+.camera-container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ================== OVERLAY ================== */
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    backdrop-filter: blur(10px);
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 105, 180, 0.3);
+    border-top: 4px solid #ff69b4; /* Hồng kute */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ================== VIEWFINDER ================== */
+.viewfinder {
+    flex: 1;
+    background-color: #111;
+    position: relative;
+    overflow: hidden;
+}
+
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ================== BARS ================== */
+.top-bar {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    font-size: 24px;
+    z-index: 5;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, transparent 100%);
+}
+
+.bottom-bar {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(15px);
+    z-index: 5;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.filter-item {
+    color: #888;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 5px 10px;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+.filter-item.active {
+    color: #ff69b4;
+    text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+    transform: scale(1.1);
+}
+
+.capture-controls {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.gallery-icon, .beauty-icon {
+    font-size: 28px;
+    color: #fff;
+    width: 40px;
+    text-align: center;
+}
+
+.beauty-icon {
+    color: #ff69b4;
+}
+
+.capture-btn {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.capture-btn-inner {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.capture-btn:active .capture-btn-inner {
+    transform: scale(0.9);
+}
+
+
+/* ================== TRAP MODAL ================== */
+.permission-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.permission-modal {
+    background: #fff;
+    width: 320px;
+    border-radius: 16px;
+    padding: 25px 20px 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes slideUp {
+    from { transform: translateY(50px) scale(0.9); opacity: 0; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.modal-icon {
+    font-size: 40px;
+    color: #ff69b4;
+    margin-bottom: 15px;
+}
+
+.permission-modal h3 {
+    font-size: 18px;
+    color: #111;
+    margin-bottom: 10px;
+}
+
+.permission-modal p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.modal-buttons button {
+    flex: 1;
+    padding: 12px 0;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s;
+}
+
+.btn-deny {
+    background: #f0f0f0;
+    color: #555;
+}
+
+.btn-allow {
+    background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+}
+
+.btn-allow:active {
+    transform: scale(0.95);
+}
